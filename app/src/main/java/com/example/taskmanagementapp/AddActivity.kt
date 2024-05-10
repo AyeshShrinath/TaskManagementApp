@@ -1,13 +1,11 @@
 package com.example.taskmanagementapp
 
+import MyDatabaseHelper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.example.taskmanagementapp.MyDatabaseHelper
-import com.example.taskmanagementapp.R
-import android.content.Intent
+import android.widget.Toast
 
 class AddActivity : AppCompatActivity() {
 
@@ -23,17 +21,26 @@ class AddActivity : AppCompatActivity() {
         titleInput = findViewById(R.id.title_input)
         authorInput = findViewById(R.id.author_input)
         pagesInput = findViewById(R.id.pages_input)
-        addButton = findViewById(R.id.add_button)
-        addButton.setOnClickListener {
-            val myDB = MyDatabaseHelper(this@AddActivity)
-            myDB.addBook(
-                titleInput.text.toString().trim(),
-                authorInput.text.toString().trim(),
-                pagesInput.text.toString().trim().toInt()
-            )
+        addButton = findViewById(R.id.deleteAll_button)
 
-            val intent = Intent(this@AddActivity, MainActivity::class.java)
-            startActivity(intent)
+        addButton.setOnClickListener {
+            val title = titleInput.text.toString().trim()
+            val author = authorInput.text.toString().trim()
+            val pagesText = pagesInput.text.toString().trim()
+
+            if (title.isNotEmpty() && author.isNotEmpty() && pagesText.isNotEmpty()) {
+                val pages = pagesText.toIntOrNull()
+                if (pages != null && pages > 0) {
+                    val myDB = MyDatabaseHelper(this@AddActivity)
+                    myDB.addBook(title, author, pages)
+                    Toast.makeText(this@AddActivity, "Book added successfully!", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(this@AddActivity, "Please enter a valid number of pages.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this@AddActivity, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

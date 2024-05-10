@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity"
-    android:padding="30dp">
+    android:background="@drawable/bgm"
+    tools:context=".UpdateActivity">
 
     <EditText
         android:id="@+id/title_input2"
@@ -14,6 +14,7 @@
         android:layout_marginTop="150dp"
         android:ems="10"
         android:hint="Book Title"
+        android:textStyle="bold"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +27,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Book Author"
+        android:textStyle="bold"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +41,7 @@
         android:ems="10"
         android:hint="Number of pages"
         android:inputType="number"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/author_input2" />
@@ -50,6 +53,7 @@
         android:layout_marginTop="40dp"
         android:text="Update"
         android:textSize="20sp"
+        android:textStyle="bold"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +66,7 @@
         android:layout_marginTop="16dp"
         android:text="Delete"
         android:textAllCaps="false"
+        android:textStyle="bold"
         android:textColor="@color/red"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

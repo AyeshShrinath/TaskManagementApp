@@ -1,5 +1,3 @@
-package com.example.taskmanagementapp
-
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -36,6 +34,30 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         onCreate(db)
     }
 
+    fun updateData(row_id: String, title: String, author: String, pages: Int) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put(COLUMN_TITLE, title)
+        cv.put(COLUMN_AUTHOR, author)
+        cv.put(COLUMN_PAGES, pages)
+
+        val result = db.update(TABLE_NAME, cv, "$COLUMN_ID=?", arrayOf(row_id))
+        if (result == -1) {
+            Toast.makeText(mContext, "Failed to update data.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(mContext, "Data updated successfully!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun deleteOneRow(row_id: String) {
+        val db = this.writableDatabase
+        val result = db.delete(TABLE_NAME, "$COLUMN_ID=?", arrayOf(row_id))
+        if (result == -1) {
+            Toast.makeText(mContext, "Failed to delete data.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(mContext, "Data deleted successfully!", Toast.LENGTH_SHORT).show()
+        }
+    }
     fun addBook(title: String, author: String, pages: Int) {
         val db = this.writableDatabase
         val cv = ContentValues()
@@ -45,45 +67,24 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         cv.put(COLUMN_PAGES, pages)
         val result = db.insert(TABLE_NAME, null, cv)
         if (result == -1L) {
-            Toast.makeText(mContext, "Failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(mContext, "Failed to add book.", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(mContext, "Added Successfully!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(mContext, "Book added successfully!", Toast.LENGTH_SHORT).show()
         }
     }
 
     fun readAllData(): Cursor? {
-        val query = "SELECT * FROM $TABLE_NAME"
         val db = this.readableDatabase
-        return db?.rawQuery(query, null)
+        return db.query(TABLE_NAME, null, null, null, null, null, null)
     }
-
-    fun updateData(row_id: String, title: String, author: String, pages: String) {
-        val db = this.writableDatabase
-        val cv = ContentValues()
-        cv.put(COLUMN_TITLE, title)
-        cv.put(COLUMN_AUTHOR, author)
-        cv.put(COLUMN_PAGES, pages)
-
-        val result = db.update(TABLE_NAME, cv, "$COLUMN_ID=?", arrayOf(row_id))
-        if (result == -1) {
-            Toast.makeText(mContext, "Failed", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(mContext, "Updated Successfully!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun deleteOneRow(row_id: String) {
-        val db = this.writableDatabase
-        val result = db.delete(TABLE_NAME, "$COLUMN_ID=?", arrayOf(row_id))
-        if (result == -1) {
-            Toast.makeText(mContext, "Failed to Delete.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(mContext, "Successfully Deleted.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     fun deleteAllData() {
         val db = this.writableDatabase
-        db.execSQL("DELETE FROM $TABLE_NAME")
+        db.delete(TABLE_NAME, null, null)
+        db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '$TABLE_NAME'")
+        db.close()
     }
+
+
+
+
 }
