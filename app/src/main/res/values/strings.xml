@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SqliteTutorial</string>
+    <string name="add_button_content_description">Add</string>
+
+</resources>
