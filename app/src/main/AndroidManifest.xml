@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskManagementApp"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:overrideLibrary="com.android.car.ui">
 
         <activity
             android:name=".AddActivity"
